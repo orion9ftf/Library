@@ -74,39 +74,42 @@ El diagrama de comunicación muestra la relación estructural entre los objetos
 que intervienen en el caso de uso “Solicitar préstamo”.
 
 #### Objetos involucrados:
+```sh
 Usuario → solicita el préstamo.
 Vista (Interfaz) → recibe la solicitud.
 Controlador → gestiona la lógica de negocio.
 Modelo Libro → verifica disponibilidad.
 Modelo Préstamo → registra el préstamo y actualiza datos.
+```
 
 #### Secuencia estructurada:
-1.- Usuario envía solicitud a la Vista.
-2.- Vista comunica al Controlador el requerimiento.
-3.- Controlador consulta a Modelo Libro por disponibilidad.
-4.- Modelo Libro responde con el estado del libro.
-5.- Si disponible, Controlador crea instancia en Modelo Préstamo.
-6.- Modelo Préstamo actualiza el estado del libro y responde a Controlador.
-7.- Controlador notifica a la Vista el resultado final.
+
+1. Usuario envía solicitud a la Vista.
+2. Vista comunica al Controlador el requerimiento.
+3. Controlador consulta a Modelo Libro por disponibilidad.
+4. Modelo Libro responde con el estado del libro.
+5. Si disponible, Controlador crea instancia en Modelo Préstamo.
+6. Modelo Préstamo actualiza el estado del libro y responde a Controlador.
+7. Controlador notifica a la Vista el resultado final.
 
 ***Este diagrama refleja la colaboración entre objetos y flujo de mensajes,
 complementando el diagrama de secuencia.***
 
 ## Levantamiento de Requerimientos:
 
-1.- Planificación del levantamiento
-2.- Stakeholders indentificados
-    2.1.- Administrador del sistema: controla catálogos y usuarios.
-    2.2.- Usuario final (lector): iimplementan el sistema.
-    2.3.- Desarrolladores: implementan el sistema.
-    2.4.- Docente o cliente académico: valida requerimientos y calidad.
+1. Planificación del levantamiento
+2. Stakeholders indentificados:
+    * Administrador del sistema: controla catálogos y usuarios.
+    * Usuario final (lector): iimplementan el sistema.
+    * Desarrolladores: implementan el sistema.
+    * Docente o cliente académico: valida requerimientos y calidad.
 
 Cronograma resumido:
 
-1.- Identificación de actores y alcance.
-2.- Entrevista con administrador para requerimientos funcionales.
-3.- Prototipo rápido de interfaz.
-4.- Validación de requerimientos y ajustes.
+1. Identificación de actores y alcance.
+2. Entrevista con administrador para requerimientos funcionales.
+3. Prototipo rápido de interfaz.
+4. Validación de requerimientos y ajustes.
 
 ## Implementación de estándares de calidad
 
