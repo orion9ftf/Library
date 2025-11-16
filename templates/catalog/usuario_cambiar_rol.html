@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Cambiar rol{% endblock %}
+{% block content %}
+<h2>Cambiar rol de {{ usuario.username }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="rol" class="form-label">Rol</label>
+    <select name="rol" id="rol" class="form-select">
+      <option value="lector" {% if usuario.rol == 'lector' %}selected{% endif %}>Lector</option>
+      <option value="admin" {% if usuario.rol == 'admin' %}selected{% endif %}>Administrador</option>
+    </select>
+  </div>
+
+  <button class="btn btn-success" type="submit">Guardar</button>
+  <a class="btn btn-secondary" href="{% url 'catalog:usuario_detail' usuario.id %}">Cancelar</a>
+</form>
+{% endblock %}

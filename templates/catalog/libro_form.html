@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Editar libro{% else %}Agregar libro{% endif %}{% endblock %}
+{% block content %}
+<h2>{% if object %}Editar libro{% else %}Agregar libro{% endif %}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success" type="submit">Guardar</button>
+  <a class="btn btn-secondary" href="{% url 'catalog:libros_list' %}">Cancelar</a>
+</form>
+{% endblock %}

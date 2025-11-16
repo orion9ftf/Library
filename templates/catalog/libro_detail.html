@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ libro.titulo }}{% endblock %}
+{% block content %}
+<h2>{{ libro.titulo }}</h2>
+<p><strong>Autor:</strong> {{ libro.autor }}</p>
+<p><strong>Ejemplares:</strong> {{ libro.ejemplares|default:"1" }}</p>
+<p>
+  <strong>Estado:</strong>
+  {% if libro.disponible and libro.ejemplares|default:1 > 0 %}
+    <span class="badge bg-success">Disponible</span>
+  {% else %}
+    <span class="badge bg-secondary">No disponible</span>
+  {% endif %}
+</p>
+
+<div class="mt-3">
+  {% if libro.disponible and libro.ejemplares|default:1 > 0 and user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'catalog:prestamo_create' libro.id %}">Solicitar préstamo</a>
+  {% elif not user.is_authenticated %}
+    <a class="btn btn-outline-primary" href="{% url 'catalog:login' %}?next={% url 'catalog:libro_detail' libro.id %}">Inicia sesión para pedir préstamo</a>
+  {% endif %}
+
+  {% if user.is_authenticated and user.rol == 'admin' %}
+    <a class="btn btn-warning" href="{% url 'catalog:libro_edit' libro.id %}">Editar</a>
+    <a class="btn btn-danger" href="{% url 'catalog:libro_delete' libro.id %}">Eliminar</a>
+  {% endif %}
+</div>
+
+<a class="btn btn-link mt-3" href="{% url 'catalog:libros_list' %}">&larr; Volver</a>
+{% endblock %}

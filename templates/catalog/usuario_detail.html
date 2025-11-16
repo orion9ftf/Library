@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Usuario: {{ usuario.username }}{% endblock %}
+{% block content %}
+<h2>Usuario: {{ usuario.username }}</h2>
+<p><strong>Email:</strong> {{ usuario.email }}</p>
+<p><strong>Rol:</strong> {{ usuario.rol }}</p>
+
+{% if user.rol == 'admin' %}
+  <a class="btn btn-primary" href="{% url 'catalog:usuario_cambiar_rol' usuario.id %}">Cambiar rol</a>
+{% endif %}
+
+<a class="btn btn-link" href="{% url 'catalog:usuario_list' %}">&larr; Volver</a>
+{% endblock %}
