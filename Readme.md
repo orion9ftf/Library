@@ -163,4 +163,28 @@ for _ in range(10):
 print("Usuarios creados con éxito.")
 ```
 
+## Se trabaja bajo la Metodología Ágil
+
+Se utiliza Jira para la asignación de tarjetas con historias de usuarios, las cuales fueron implementadas de manera gradual por Sprint.
+![jira](img/area_de_trabajo.png)
+
+
+### Modo visual del sitio
+#### Catálogo de Libros
+![sitio](img/catalogo_libros.png)
+
+### Préstamos de Libros
+![prestamos](img/prestamo_libros.png)
+
+### Usuarios / vista de una Administradora/or 
+![usuario](img/usuarios.png)
+
+### Cambiar el rol
+
+De Lector a Admin
+![cambio_rol](img/cambo_de_rol.png)
+
+
+*****************************************************************
+## FrontEnd
 
