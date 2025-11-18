@@ -15,6 +15,10 @@ from .decorators import admin_required
 from .models import Libro, Prestamo, Usuario
 from .forms import LibroForm
 
+def inicio(request):
+    return render(request, 'catalog/inicio.html')
+
+
 def es_admin(user):
     return user.is_authenticated and user.rol == "admin"
 

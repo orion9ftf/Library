@@ -4,6 +4,9 @@ from . import views
 
 app_name = "catalog"
 urlpatterns = [
+    # HOME
+    path('inicio/', views.LibroListView.as_view(), name='inicio'),
+    path('', views.inicio, name='inicio'),
     # LIBROS
     path('libros/', views.LibroListView.as_view(), name='libros_list'),
     path('libros/<int:pk>/', views.LibroDetailView.as_view(), name='libro_detail'),
@@ -24,7 +27,4 @@ urlpatterns = [
     # LOGIN / LOGOUT
     path('login/', auth_views.LoginView.as_view(template_name='catalog/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-
-    # HOME
-    path('', views.LibroListView.as_view(), name='inicio'),
 ]
