@@ -7,6 +7,10 @@ urlpatterns = [
     # HOME
     path('inicio/', views.LibroListView.as_view(), name='inicio'),
     path('', views.inicio, name='inicio'),
+    # LOGIN
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('register/', views.register_view, name='register'),
     # LIBROS
     path('libros/', views.LibroListView.as_view(), name='libros_list'),
     path('libros/<int:pk>/', views.LibroDetailView.as_view(), name='libro_detail'),
@@ -23,8 +27,4 @@ urlpatterns = [
     path('usuarios/', views.UsuarioListView.as_view(), name='usuario_list'),
     path('usuarios/<int:pk>/', views.UsuarioDetailView.as_view(), name='usuario_detail'),
     path('usuarios/<int:pk>/cambiar-rol/', views.cambiar_rol_usuario, name='usuario_cambiar_rol'),
-
-    # LOGIN / LOGOUT
-    path('login/', auth_views.LoginView.as_view(template_name='catalog/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

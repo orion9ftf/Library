@@ -14,6 +14,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .decorators import admin_required
 from .models import Libro, Prestamo, Usuario
 from .forms import LibroForm
+# login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.urls import reverse
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from .forms import LoginForm
 
 def inicio(request):
     return render(request, 'catalog/inicio.html')
@@ -21,6 +27,65 @@ def inicio(request):
 
 def es_admin(user):
     return user.is_authenticated and user.rol == "admin"
+
+# login
+User = get_user_model()
+
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            identifier = form.cleaned_data['username_or_email']
+            password = form.cleaned_data['password']
+
+            # Intento estándar por username
+            user = authenticate(request, username=identifier, password=password)
+
+            # email -> buscar usuario por email y autenticar por username
+            if user is None:
+                try:
+                    user_obj = User.objects.get(email__iexact=identifier)
+                    user = authenticate(request, username=user_obj.get_username(), password=password)
+                except User.DoesNotExist:
+                    user = None
+
+            if user is not None and user.is_active:
+                login(request, user)  # crea la sesión
+                messages.success(request, f"Bienvenid@, {user.get_username()}!")
+                # redirigir a next si viene en GET ?next=...
+                next_url = request.GET.get('next') or reverse('catalog:inicio')
+                return redirect(next_url)
+            else:
+                messages.error(request, "Usuario o contraseña incorrectos.")
+    else:
+        form = LoginForm()
+
+    return render(request, "catalog/login.html", {"form": form})
+
+def logout_view(request):
+    logout(request)  # limpia la sesión
+    messages.info(request, "Has cerrado sesión.")
+    return redirect('catalog:inicio')
+
+def register_view(request):
+    # Ejemplo simple de registro; en producción valida más y usa Django forms/validators
+    if request.method == "POST":
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        if not (username and email and password):
+            messages.error(request, "Completa todos los campos.")
+        else:
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "Nombre de usuario ya existe.")
+            elif User.objects.filter(email=email).exists():
+                messages.error(request, "Email ya registrado.")
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                messages.success(request, "Cuenta creada. Por favor inicia sesión.")
+                return redirect('login')
+    return render(request, "catalog/register.html")
+# end login
 
 class LibroListView(LoginRequiredMixin, ListView):
     model = Libro

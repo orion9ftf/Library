@@ -14,8 +14,7 @@ class Usuario(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.get_full_name() or self.email})"
-
-
+    
 class Libro(models.Model):
     titulo = models.CharField(max_length=255)
     autor = models.CharField(max_length=255, blank=True)
