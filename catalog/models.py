@@ -9,6 +9,7 @@ class Usuario(AbstractUser):
     ROLES = (
         ('admin', 'Administrador'),
         ('lector', 'Lector'),
+        ('editor', 'Editor'),
     )
     rol = models.CharField(max_length=20, choices=ROLES, default='lector')
 

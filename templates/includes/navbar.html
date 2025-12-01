@@ -19,7 +19,7 @@
         {% endif %}
       </ul>
 
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ms-auto">
         {% if user.is_authenticated %}
           <li class="nav-item"><span class="nav-link">Hola, {{ user.username }}</span></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'catalog:logout' %}">Salir</a></li>
@@ -27,9 +27,12 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'catalog:login' %}">Ingresar</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'catalog:register' %}">Registrarse</li>
         {% endif %}
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
         <!-- TODO -->
-        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:login' %}">Ingresar</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:register' %}">Registrarse</li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:login' %}">Ingresarrrrrr</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'catalog:register' %}">Registrarseeeee</li>
       </ul>
     </div>
   </div>

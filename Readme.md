@@ -57,16 +57,16 @@ La clase Préstamo actúa como intermediaria entre Usuario y Libro.
 
 ### Diagrama de clases (modelo Django)
 
-![diagrama_clases](img/diagrama_clases.png)
+![diagrama_clases](/catalog/static/img/diagrama_clases.png)
 
 
 ### Diagrama de secuencia
 
-![diagrama](img/diagrama_de_secuencia.png)
+![diagrama](/catalog/static/img/diagrama_de_secuencia.png)
 
 
 ### Diagrama de actividades
-![diagrama_de_actividades](img/diagrama_de_actividades.png)
+![diagrama_de_actividades](/catalog/static/img/diagrama_de_actividades.png)
 
 ### DIAGRAMA DE COMUNICACIÓN / INTERACCIÓN
 
@@ -166,24 +166,90 @@ print("Usuarios creados con éxito.")
 ## Se trabaja bajo la Metodología Ágil
 
 Se utiliza Jira para la asignación de tarjetas con historias de usuarios, las cuales fueron implementadas de manera gradual por Sprint.
-![jira](img/area_de_trabajo.png)
+![jira](/catalog/static/img/area_de_trabajo.png)
 
 
 ### Modo visual del sitio
 #### Catálogo de Libros
-![sitio](img/catalogo_libros.png)
+![sitio](/catalog/static/img/catalogo_libros.png)
 
 ### Préstamos de Libros
-![prestamos](img/prestamo_libros.png)
+![prestamos](/catalog/static/img/prestamo_libros.png)
 
 ### Usuarios / vista de una Administradora/or 
-![usuario](img/usuarios.png)
+![usuario](/catalog/static/img/usuarios.png)
 
 ### Cambiar el rol
 
 De Lector a Admin
-![cambio_rol](img/cambo_de_rol.png)
+![cambio_rol](/catalog/static/img/cambo_de_rol.png)
 
+
+
+```pgsql
+id SERIAL PK
+nombre VARCHAR NOT NULL
+email VARCHAR UNIQUE NOT NULL
+password_hash VARCHAR NOT NULL
+rol VARCHAR NOT NULL (lector|admin)
+fecha_creacion TIMESTAMP DEFAULT now()
+
+id SERIAL PK
+titulo VARCHAR NOT NULL
+autor VARCHAR
+isbn VARCHAR UNIQUE
+categoria VARCHAR
+copias_total INTEGER DEFAULT 1
+copias_disponibles INTEGER DEFAULT 1
+portada_url VARCHAR
+descripcion TEXT
+
+
+id SERIAL PK
+usuario_id INTEGER FK usuario(id)
+libro_id INTEGER FK libro(id)
+fecha_inicio TIMESTAMP NOT NULL
+fecha_fin_prevista TIMESTAMP NOT NULL
+fecha_devolucion TIMESTAMP NULLABLE
+estado VARCHAR (activo|devuelto|vencido)
+
+```
+
+```sql
+
+CREATE TABLE usuario (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(150) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  rol VARCHAR(20) NOT NULL,
+  fecha_creacion TIMESTAMP NOT NULL DEFAULT now()
+);
+
+CREATE TABLE libro (
+  id SERIAL PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  autor VARCHAR(255),
+  isbn VARCHAR(20) UNIQUE,
+  categoria VARCHAR(100),
+  copias_total INTEGER NOT NULL DEFAULT 1,
+  copias_disponibles INTEGER NOT NULL DEFAULT 1,
+  portada_url TEXT,
+  descripcion TEXT
+);
+
+CREATE TABLE prestamo (
+  id SERIAL PRIMARY KEY,
+  usuario_id INTEGER NOT NULL REFERENCES usuario(id),
+  libro_id INTEGER NOT NULL REFERENCES libro(id),
+  fecha_inicio TIMESTAMP NOT NULL,
+  fecha_fin_prevista TIMESTAMP NOT NULL,
+  fecha_devolucion TIMESTAMP,
+  estado VARCHAR(20) NOT NULL DEFAULT 'activo',
+  CONSTRAINT un_libro_un_prestamo CHECK (estado IN ('activo','devuelto','vencido'))
+);
+
+```
 
 *****************************************************************
 ## FrontEnd

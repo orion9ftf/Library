@@ -37,11 +37,8 @@ def login_view(request):
         if form.is_valid():
             identifier = form.cleaned_data['username_or_email']
             password = form.cleaned_data['password']
-
-            # Intento estándar por username
             user = authenticate(request, username=identifier, password=password)
 
-            # email -> buscar usuario por email y autenticar por username
             if user is None:
                 try:
                     user_obj = User.objects.get(email__iexact=identifier)
@@ -50,9 +47,8 @@ def login_view(request):
                     user = None
 
             if user is not None and user.is_active:
-                login(request, user)  # crea la sesión
+                login(request, user)
                 messages.success(request, f"Bienvenid@, {user.get_username()}!")
-                # redirigir a next si viene en GET ?next=...
                 next_url = request.GET.get('next') or reverse('catalog:inicio')
                 return redirect(next_url)
             else:
@@ -63,12 +59,11 @@ def login_view(request):
     return render(request, "catalog/login.html", {"form": form})
 
 def logout_view(request):
-    logout(request)  # limpia la sesión
+    logout(request)
     messages.info(request, "Has cerrado sesión.")
     return redirect('catalog:inicio')
 
 def register_view(request):
-    # Ejemplo simple de registro; en producción valida más y usa Django forms/validators
     if request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
