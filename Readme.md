@@ -215,6 +215,8 @@ estado VARCHAR (activo|devuelto|vencido)
 
 ```
 
+Base de datos estrucutrada con PostgreSQL, para producción, para el uso local se utiliza una base de datos ligera la cual se define por defecto en el Framework Django.
+
 ```sql
 
 CREATE TABLE usuario (
@@ -253,4 +255,21 @@ CREATE TABLE prestamo (
 
 *****************************************************************
 ## FrontEnd
+
+El Lecto se encontrará con el sitio principal, donde podrá validar si desea crear una cuenta para crear un préstamos de Libros.
+
+![cambio_rol](/catalog/static/img/home.png)
+
+
+
+Experiencia de Usuario UX:
+
+El Lector, Administrador, Editor podrán revisar en el sitio principal los libros disponibles.
+
+![seleccion_libros](/catalog/static/img/seleccion_libros.png)
+
+
+El footer entregará información de contacto para el usuario, lector, el cual se podrá poner en contacto con el administrador...
+![footer](/catalog/static/img/footer.png)
+
 
