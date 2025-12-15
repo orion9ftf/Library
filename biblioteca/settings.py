@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,7 +75,25 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = 'static/'
+#STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 #STATICFILES_DIRS = [BASE_DIR / 'static']
+
+### Python Anywhere ###
+import os
+import sys
+
+path = '/home/m4phyer/Library'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'Library.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
